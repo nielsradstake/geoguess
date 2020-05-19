@@ -1,0 +1,315 @@
+{
+  "map": {
+    "image": "utrecht.png",
+    "topLeft": {
+      "lat": 52.1024,
+      "long": 5.0977
+    },
+    "bottomRight": {
+      "lat": 52.0756,
+      "long": 5.1405
+    }
+  },
+  "locations": [
+    {
+      "name": "'t Oude Pothuys",
+      "lat": 52.0862,
+      "long": 5.12187
+    },
+    {
+      "name": "(Tivoli) De Helling",
+      "lat": 52.07692,
+      "long": 5.12183
+    },
+    {
+      "name": "Academiegebouw Universiteit Utrecht",
+      "lat": 52.09025,
+      "long": 5.12231
+    },
+    {
+      "name": "Beatrix Theater",
+      "lat": 52.08817,
+      "long": 5.10737
+    },
+    {
+      "name": "Bibliotheek Neude",
+      "lat": 52.09313,
+      "long": 5.11819
+    },
+    {
+      "name": "Broodje Mario",
+      "lat": 52.09221,
+      "long": 5.11709
+    },
+    {
+      "name": "Café de Poort",
+      "lat": 52.08189,
+      "long": 5.12359
+    },
+    {
+      "name": "Café De Zaak",
+      "lat": 52.09211,
+      "long": 5.12028
+    },
+    {
+      "name": "Café DeRat",
+      "lat": 52.08595,
+      "long": 5.12054
+    },
+    {
+      "name": "Centraal Museum",
+      "lat": 52.08378,
+      "long": 5.12585
+    },
+    {
+      "name": "De Inktpot / ProRail hoofdkantoor",
+      "lat": 52.08725,
+      "long": 5.11504
+    },
+    {
+      "name": "De Planeet",
+      "lat": 52.09307,
+      "long": 5.1164
+    },
+    {
+      "name": "De Verrekijker / Rabobank Bestuurscentrum",
+      "lat": 52.08569,
+      "long": 5.10884
+    },
+    {
+      "name": "Domtoren",
+      "lat": 52.09065,
+      "long": 5.1213
+    },
+    {
+      "name": "EKKO",
+      "lat": 52.09748,
+      "long": 5.1145
+    },
+    {
+      "name": "Gevangenis Wolvenplein",
+      "lat": 52.09717,
+      "long": 5.12583
+    },
+    {
+      "name": "Grand Hotel Karel V",
+      "lat": 52.08784,
+      "long": 5.11824
+    },
+    {
+      "name": "Griftpark",
+      "lat": 52.1006,
+      "long": 5.1267
+    },
+    {
+      "name": "Het Utrechts Archief",
+      "lat": 52.08904,
+      "long": 5.12284
+    },
+    {
+      "name": "HKU Utrechts Conservatorium",
+      "lat": 52.08927,
+      "long": 5.11737
+    },
+    {
+      "name": "Janskerk",
+      "lat": 52.09333,
+      "long": 5.12183
+    },
+    {
+      "name": "Louis Hartlooper Complex",
+      "lat": 52.08171,
+      "long": 5.12421
+    },
+    {
+      "name": "Museum Catharijneconvent",
+      "lat": 52.08749,
+      "long": 5.12396
+    },
+    {
+      "name": "Museum Speelklok",
+      "lat": 52.09057,
+      "long": 5.11934
+    },
+    {
+      "name": "Neude",
+      "lat": 52.09317,
+      "long": 5.11872
+    },
+    {
+      "name": "Nijntje Museum",
+      "lat": 52.08391,
+      "long": 5.1258
+    },
+    {
+      "name": "Nijntje pleintje",
+      "lat": 52.0963,
+      "long": 5.11652
+    },
+    {
+      "name": "NS Station Utrecht Vaartse Rijn",
+      "lat": 52.07856,
+      "long": 5.12226
+    },
+    {
+      "name": "Park Lepelenburg",
+      "lat": 52.08938,
+      "long": 5.12849
+    },
+    {
+      "name": "Rechtbank Midden-Nederland",
+      "lat": 52.08618,
+      "long": 5.11645
+    },
+    {
+      "name": "Roberto Gelato",
+      "lat": 52.09895,
+      "long": 5.13629
+    },
+    {
+      "name": "Smakkelaarsveld",
+      "lat": 52.09256,
+      "long": 5.11023
+    },
+    {
+      "name": "Sonnenborgh Museum en Sterrenwacht",
+      "lat": 52.08531,
+      "long": 5.12904
+    },
+    {
+      "name": "Spoorwegmuseum",
+      "lat": 52.08775,
+      "long": 5.13186
+    },
+    {
+      "name": "Springhaver",
+      "lat": 52.08813,
+      "long": 5.11915
+    },
+    {
+      "name": "Stadhuis",
+      "lat": 52.09184,
+      "long": 5.11961
+    },
+    {
+      "name": "Stadskantoor Gemeente Utrecht",
+      "lat": 52.08949,
+      "long": 5.10815
+    },
+    {
+      "name": "Stadskasteel Oudaen",
+      "lat": 52.09275,
+      "long": 5.11671
+    },
+    {
+      "name": "Stadsschouwburg Utrecht",
+      "lat": 52.09336,
+      "long": 5.12734
+    },
+    {
+      "name": "Stairway to Heaven",
+      "lat": 52.09005,
+      "long": 5.11704
+    },
+    {
+      "name": "TivoliVredenburg",
+      "lat": 52.09245,
+      "long": 5.11322
+    },
+    {
+      "name": "Ulu Camii Moskee",
+      "lat": 52.09193,
+      "long": 5.10428
+    },
+    {
+      "name": "Universiteitsmuseum Utrecht",
+      "lat": 52.08482,
+      "long": 5.12572
+    },
+    {
+      "name": "Vredenburgplein",
+      "lat": 52.09202,
+      "long": 5.11467
+    },
+    {
+      "name": "Watertoren Lauwerhof",
+      "lat": 52.09569,
+      "long": 5.11859
+    },
+    {
+      "name": "Winkel van Sinkel",
+      "lat": 52.09188,
+      "long": 5.11868
+    },
+    {
+      "name": "Woolloomooloo",
+      "lat": 52.09382,
+      "long": 5.12245
+    },
+    {
+      "name": "Holland Casino",
+      "lat": 52.08366,
+      "long": 5.09933
+    },
+    {
+      "name": "Diakonnessenhuis",
+      "lat": 52.08171,
+      "long": 5.13828
+    },
+    {
+      "name": "Villa Jongerius",
+      "lat": 52.08101,
+      "long": 5.10499
+    },
+    {
+      "name": "Veilinghaven",
+      "lat": 52.08219,
+      "long": 5.10766
+    },
+    {
+      "name": "Parkeergarage Paardenveld",
+      "lat": 52.09516,
+      "long": 5.11141
+    },
+    {
+      "name": "Café Olivier",
+      "lat": 52.09068,
+      "long": 5.1158
+    },
+    {
+      "name": "Kamer van Koophandel",
+      "lat": 52.09448,
+      "long": 5.11421
+    },
+    {
+      "name": "Molen De Ster",
+      "lat": 52.089669,
+      "long": 5.100644
+    },
+    {
+      "name": "Begraafplaats Soestbergen",
+      "lat": 52.0774,
+      "long": 5.1295
+    },
+    {
+      "name": "Grafisch Lyceum Utrecht",
+      "lat": 52.07832,
+      "long": 5.11647
+    },
+    {
+      "name": "De Florin",
+      "lat": 52.09324,
+      "long": 5.12398
+    },
+    {
+      "name": "IBB-complex",
+      "lat": 52.080817,
+      "long": 5.131946
+    },
+    {
+      "name": "Lapjesmarkt",
+      "lat": 52.095344,
+      "long": 5.120659
+    }
+  ]
+}

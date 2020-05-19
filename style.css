@@ -1,0 +1,38 @@
+
+body {
+    background-color: #f2f2f2;
+    font: 400 1em/1.4 'Lucida Grande','Lucida Sans Unicode','Lucida Sans',Verdana,sans-serif;
+}
+
+.container {
+    max-width: 600px;
+}
+
+.badge-primary {
+    background-color: #BB261A;
+}
+.btn-primary {
+    background-color: #BB261A;
+    border-color: #BB261A;
+}
+.btn-primary:hover {
+    background-color: #BB261A;
+    border-color: #BB261A;
+}
+
+
+
+#main-container {
+    background-color: #ffffff;
+    border-top: 7px solid #BB261A;
+    border-bottom: 7px solid #BB261A;
+}
+
+canvas#map {
+    width: 100%;
+    height: auto;
+}
+
+.progress-bar {
+    background-color: #F5B942;
+}

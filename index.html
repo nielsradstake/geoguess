@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="nl">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Hoe goed ken jij Utrecht?</title>
+    <meta name="description"
+          content="Hoe goed ken jij Utrecht? Wijs 15 willekeurige locaties zo precies mogelijk aan op de kaart.">
+</head>
+<body>
+<div class="container mt-3 pt-3 pb-2" id="main-container">
+    <span class="badge badge-pill badge-primary float-right" id="score">0</span>
+    <h1>Hoe goed ken jij Utrecht?</h1>
+    <div id="game-explanation">
+        <p>Je krijgt zodadelijk <span id="number-of-locations">@</span> van in totaal
+            <span id="total-number-of-locations">@</span> locaties in Utrecht te zien.
+            Per locatie krijg je <span id="guess-seconds">@</span> seconden de tijd om
+            deze zo precies mogelijk op de kaart aan te wijzen. Hoe dichter bij je klikt des te meer punten je verdient.
+            Je kunt maximaal <span id="max-score">@</span> punten halen. Voor pleinen,
+            parken en grote gebouwen is het midden aangehouden. Succes!</p>
+        <button class="btn btn-primary btn-block" id="btn-start">Start!</button>
+    </div>
+    <div id="game-main" class="card">
+        <div class="card-body">
+            <h5 class="card-title" id="guess"></h5>
+            <div class="progress">
+                <div id="timer-bar" class="progress-bar" role="progressbar" style="width: 100%"></div>
+            </div>
+        </div>
+    </div>
+    <div id="game-over">
+        <p>Het spel is afgelopen, je hebt <strong><span id="game-over-points">0</span> punten</strong> gehaald!</p>
+        <button class="btn btn-primary btn-block" id="btn-restart">Opnieuw!</button>
+    </div>
+    <canvas id="map" width="600" height="600" class="mt-3"></canvas>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+<script>
+
+    // Contants
+    const GUESS_SECONDS = 7;
+    const NUMBER_OF_LOCATIONS = 15;
+
+    // Game state
+    var gameStarted = false;
+    var score = 0;
+    var progress = 0;
+    var remainingTime = 0;
+    var timer;
+
+    // The map and locations
+    var locations = [];
+    var geoTopLeft;
+    var geoBottomRight;
+    var mapDiagonalInMeters;
+    var canvas = $('canvas#map')[0];
+    var context = canvas.getContext('2d');
+
+    function initGame() {
+
+        gameStarted = false;
+        score = 0;
+        progress = 0;
+        locations = [];
+
+        updateScore();
+
+        $('#number-of-locations').text(NUMBER_OF_LOCATIONS);
+        $('#max-score').text(NUMBER_OF_LOCATIONS * 100);
+        $('#guess-seconds').text(GUESS_SECONDS);
+        $('#game-explanation').show();
+        $('#game-main').hide();
+        $('#game-over').hide();
+
+        $.getJSON('utrecht.json?_=' + new Date().getTime(), function (json) {
+
+            // Map geo positions
+            geoTopLeft = json.map.topLeft;
+            geoBottomRight = json.map.bottomRight;
+            mapDiagonalInMeters = distanceInMeters(geoTopLeft, geoBottomRight);
+
+            // Load the map image and draw it on the canvas
+            var img = new Image;
+            img.onload = function () {
+                context.drawImage(this, 0, 0, this.naturalWidth, this.naturalHeight, 0, 0, canvas.width, canvas.height);
+            };
+            img.src = json.map.image;
+
+            // Pick random locations
+            $('#total-number-of-locations').text(json.locations.length);
+            shuffleArray(json.locations);
+            for (let i = 0; i < NUMBER_OF_LOCATIONS; i++) {
+                locations.push(json.locations[i]);
+            }
+        });
+    }
+
+    function updateScore() {
+        $('#score').html(score);
+        $('#game-over-points').html(score);
+    }
+
+    function startGame() {
+        gameStarted = true;
+        $('#game-explanation').hide();
+        $('#game-main').show();
+        $('#game-over').hide();
+        startGuess();
+        $.get('track.php'); // simple counter
+    }
+
+    function endGame() {
+        gameStarted = false;
+        $('#game-explanation').hide();
+        $('#game-main').hide();
+        $('#game-over').show();
+    }
+
+    function startGuess() {
+        $('#guess').text('#' + (progress + 1) + ': ' + locations[progress].name);
+        $('#timer-bar').css('transition', 'none').css('width', '100%');
+
+        // Update the timer bar every 0.1s
+        remainingTime = GUESS_SECONDS * 10;
+        timer = window.setInterval(function () {
+            if (remainingTime > 0) {
+                remainingTime--;
+            } else {
+                window.clearInterval(timer);
+                nextGuess();
+            }
+            let percentage = Math.round((remainingTime / (GUESS_SECONDS * 10)) * 100);
+            $('#timer-bar').css('width', percentage + '%');
+        }, 100);
+    }
+
+    function nextGuess() {
+        window.clearInterval(timer);
+        if (progress < (locations.length - 1)) {
+            progress++;
+            startGuess();
+        } else {
+            endGame();
+        }
+    }
+
+    function guessLocation(geo) {
+        let correctLocation = locations[progress];
+        drawGeo(geo, '#345583');
+        drawGeo(correctLocation, '#F5B942');
+        let distance = distanceInMeters(geo, correctLocation);
+        if (distance < mapDiagonalInMeters / 10) {
+            let points = Math.ceil(((mapDiagonalInMeters / 10) - distance) / (mapDiagonalInMeters / 10) * 100);
+            score += points;
+            updateScore();
+        }
+        nextGuess();
+    }
+
+    function geoToPixel(geo) {
+        let percX = (geo.long - geoTopLeft.long) / (geoBottomRight.long - geoTopLeft.long);
+        let percY = (geo.lat - geoTopLeft.lat) / (geoBottomRight.lat - geoTopLeft.lat);
+        return {
+            x: Math.round(percX * canvas.width),
+            y: Math.round(percY * canvas.height),
+        }
+    }
+
+    function pixelToGeo(x, y) {
+        let percX = x / canvas.scrollWidth; // use scrollWidth and scrollHeight for scaled canvas
+        let percY = y / canvas.scrollHeight;
+        return {
+            lat: (percY * (geoBottomRight.lat - geoTopLeft.lat)) + geoTopLeft.lat,
+            long: (percX * (geoBottomRight.long - geoTopLeft.long)) + geoTopLeft.long
+        }
+    }
+
+    function drawGeo(geo, color) {
+        let pixelLocation = geoToPixel(geo);
+        context.fillStyle = color;
+        context.beginPath();
+        context.arc(pixelLocation.x, pixelLocation.y, 4, 0, 2 * Math.PI);
+        context.fill();
+    }
+
+    /**
+     * Calculate the distance between 2 geo points in meters using the Haversine formula
+     */
+    function distanceInMeters(locA, locB) {
+        const EARTH_RADIUS = 6371000; // earth radius in meters
+        let dLat = (locA.lat - locB.lat) * Math.PI / 180;
+        let dLon = (locA.long - locB.long) * Math.PI / 180;
+        let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(locB.lat * Math.PI / 180) * Math.cos(locA.lat * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return Math.round(EARTH_RADIUS * c);
+    }
+
+    function shuffleArray(a) {
+        let i = a.length;
+        while (i) {
+            let j = Math.floor(Math.random() * i);
+            let t = a[--i];
+            a[i] = a[j];
+            a[j] = t;
+        }
+        return a;
+    }
+
+    $(document).ready(function () {
+        initGame();
+    });
+
+    $('#btn-start').click(function () {
+        startGame();
+    });
+
+    $('#btn-restart').click(function () {
+        initGame();
+    });
+
+    $('canvas#map').click(function (e) {
+        let geo = pixelToGeo(e.offsetX, e.offsetY);
+        if (gameStarted) {
+            guessLocation(geo);
+        }
+    });
+
+</script>
+</body>
+</html>
